@@ -6,7 +6,7 @@ import {
   GraphQLList,
   GraphQLNonNull,
 } from "graphql";
-import { getNames } from "../services/names.js";
+import { getNames, addName } from "../services/names.js";
 
 const NameType = new GraphQLObjectType({
   name: "Name",
@@ -37,7 +37,10 @@ const Mutation = new GraphQLObjectType({
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(parent, args) {},
+      async resolve(parent, args) {
+        const [newName] = await addName({ name: args.name });
+        return newName;
+      },
     },
   },
 });
