@@ -9,7 +9,6 @@ function App() {
     <div className="App">
       <p>Hello World</p>
       <NamesList />
-      <AddName />
     </div>
   );
 }
