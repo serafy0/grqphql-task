@@ -10,7 +10,7 @@ export async function addName(newName) {
 }
 export async function getNames() {
   try {
-    return await Name.select("*");
+    return await db.select("name", "id").from("names");
   } catch (err) {
     console.log(err);
   }
