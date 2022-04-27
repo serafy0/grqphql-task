@@ -21,7 +21,7 @@ const RooTQuery = new GraphQLObjectType({
   fields: {
     getNames: {
       type: new GraphQLList(NameType),
-      async resolve(parent, args) {
+      resolve: async (parent, args) => {
         const names = await getNames();
         return names;
       },
@@ -37,7 +37,7 @@ const Mutation = new GraphQLObjectType({
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(parent, args) {
+      resolve: async (parent, args) => {
         const [newName] = await addName({ name: args.name });
         return newName;
       },
