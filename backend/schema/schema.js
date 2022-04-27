@@ -6,6 +6,7 @@ import {
   GraphQLList,
   GraphQLNonNull,
 } from "graphql";
+import { getNames } from "../services/names.js";
 
 const NameType = new GraphQLObjectType({
   name: "Name",
@@ -20,7 +21,10 @@ const RooTQuery = new GraphQLObjectType({
   fields: {
     getNames: {
       type: new GraphQLList(NameType),
-      async resolve(parent, args) {},
+      async resolve(parent, args) {
+        const names = await getNames();
+        return names;
+      },
     },
   },
 });
