@@ -10,7 +10,7 @@ export async function addName(newName) {
 }
 export async function getNames() {
   try {
-    return await db.select("name", "id").from("names");
+    return await db.select("name", "id").from("names").orderBy("id", "desc");
   } catch (err) {
     console.log(err);
   }
