@@ -6,8 +6,8 @@ import AddName from "./NamesForm";
 import { useState, useEffect } from "react";
 
 const getNamesQuery = gql`
-  {
-    getNames {
+  query GetNames($lastId: ID, $limit: Int) {
+    getNames(lastId: $lastId, limit: $limit) {
       name
       id
     }
@@ -15,9 +15,11 @@ const getNamesQuery = gql`
 `;
 
 function NamesList() {
-  const { loading, error, data } = useQuery(getNamesQuery);
+  const { loading, error, data, fetchMore } = useQuery(getNamesQuery);
 
   const [names, setNames] = useState<Name[]>([]);
+  const [allFetched, setAllFetched] = useState<boolean>(false);
+  const [limit, setLimit] = useState<number>(10);
 
   useEffect(() => {
     if (data) {
@@ -45,6 +47,25 @@ function NamesList() {
           <li key={name.id.toString()}>{name.name}</li>
         ))}
       </ul>
+
+      {!allFetched && (
+        <button
+          onClick={async () => {
+            const response = await fetchMore({
+              variables: { lastId: names[names.length - 1].id },
+            });
+            if (response.data.getNames.length === 0) {
+              setAllFetched(true);
+              return;
+            }
+            setNames((prev) => {
+              return [...prev, ...response.data.getNames];
+            });
+          }}
+        >
+          fetch more
+        </button>
+      )}
     </div>
   );
 }
