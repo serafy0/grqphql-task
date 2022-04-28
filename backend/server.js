@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 
 import cors from "cors";
@@ -14,7 +15,6 @@ app.use(
   "/graphql",
   graphqlHTTP({
     schema,
-    graphiql: true,
   })
 );
 

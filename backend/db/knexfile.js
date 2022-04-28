@@ -1,9 +1,7 @@
 const knexfile = {
   client: "pg",
   connection: {
-    database: "graphql_db",
-    user: "",
-    password: "",
+    url: process.env.DATABASE_CONNECTION,
   },
   pool: {
     min: 2,
