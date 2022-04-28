@@ -1,5 +1,4 @@
 import { gql, useQuery } from "@apollo/client";
-import { graphql } from "graphql";
 import { Name } from "../interfaces/Name";
 import AddName from "./NamesForm";
 
@@ -19,7 +18,6 @@ function NamesList() {
 
   const [names, setNames] = useState<Name[]>([]);
   const [allFetched, setAllFetched] = useState<boolean>(false);
-  const [limit, setLimit] = useState<number>(10);
 
   useEffect(() => {
     if (data) {
