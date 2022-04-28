@@ -5,7 +5,7 @@ import NamesList from "./components/NamesList";
 function App() {
   return (
     <div className="App">
-      <p>Hello World</p>
+      <p>Names List</p>
       <NamesList />
     </div>
   );

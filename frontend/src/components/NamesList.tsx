@@ -22,6 +22,9 @@ function NamesList() {
   useEffect(() => {
     if (data) {
       setNames(data.getNames);
+      if (data.getNames.length < 10) {
+        setAllFetched(true);
+      }
     }
   }, [setNames, data]);
 
@@ -55,6 +58,8 @@ function NamesList() {
             if (response.data.getNames.length === 0) {
               setAllFetched(true);
               return;
+            } else if (names.length === 10) {
+              setAllFetched(false);
             }
             setNames((prev) => {
               return [...prev, ...response.data.getNames];
