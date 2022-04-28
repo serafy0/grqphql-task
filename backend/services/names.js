@@ -8,9 +8,26 @@ export async function addName(newName) {
     console.log(err);
   }
 }
-export async function getNames() {
+export async function getNames(lastId, limit) {
   try {
-    return await db.select("name", "id").from("names").orderBy("id", "desc");
+    if (!limit) {
+      limit = 10;
+    }
+
+    if (!lastId) {
+      return await db
+        .select("name", "id")
+        .from("names")
+        .limit(limit)
+        .orderBy("id", "desc");
+    }
+
+    return await db
+      .select("name", "id")
+      .from("names")
+      .limit(limit)
+      .where("id", "<", lastId)
+      .orderBy("id", "desc");
   } catch (err) {
     console.log(err);
   }
