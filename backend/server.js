@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { graphqlHTTP } from "express-graphql";
-import { schema } from "./schema/schema.js";
+import { resolvers, schema } from "./schema/schema.js";
 
 const app = express();
 
@@ -14,7 +14,8 @@ app.use(cors());
 app.use(
   "/graphql",
   graphqlHTTP({
-    schema,
+    schema: schema,
+    rootValue: resolvers,
   })
 );
 

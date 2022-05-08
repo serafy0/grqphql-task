@@ -1,58 +1,34 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLSchema,
-  GraphQLID,
-  GraphQLList,
-  GraphQLNonNull,
-  GraphQLInt,
-} from "graphql";
+import { buildSchema } from "graphql";
 import { getNames, addName } from "../services/names.js";
 
-const NameType = new GraphQLObjectType({
-  name: "Name",
-  fields: () => ({
-    id: { type: GraphQLID },
-    name: { type: GraphQLString },
-  }),
-});
+const schema = buildSchema(`
+  type Name {
+    id: ID
+    name: String
+  }
+  type Query {
+    getNames(limit: Int, lastId: ID): [Name]
+  }
 
-const RooTQuery = new GraphQLObjectType({
-  name: "RootQueryType",
-  fields: {
-    getNames: {
-      type: new GraphQLList(NameType),
-      args: {
-        limit: { type: GraphQLInt },
-        lastId: { type: GraphQLID },
-      },
+  type Mutation {
+    addName(name: String!): Name
+  }
 
-      resolve: async (parent, args) => {
-        const names = await getNames(args.lastId, args.limit);
-        return names;
-      },
-    },
+  schema {
+    query: Query
+    mutation: Mutation
+  }
+`);
+
+const resolvers = {
+  getNames: async ({ lastId, limit }) => {
+    const names = await getNames(lastId, limit);
+    return names;
   },
-});
-
-const Mutation = new GraphQLObjectType({
-  name: "Mutation",
-  fields: {
-    addName: {
-      type: NameType,
-      args: {
-        name: { type: new GraphQLNonNull(GraphQLString) },
-      },
-      resolve: async (parent, args) => {
-        const [newName] = await addName({ name: args.name });
-        return newName;
-      },
-    },
+  addName: async ({ name }) => {
+    const [newName] = await addName({ name: name });
+    return newName;
   },
-});
+};
 
-const schema = new GraphQLSchema({
-  query: RooTQuery,
-  mutation: Mutation,
-});
-export { schema };
+export { schema, resolvers };
