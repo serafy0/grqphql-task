@@ -2,7 +2,7 @@ import { gql, useMutation } from "@apollo/client";
 import { graphql } from "graphql";
 import { FormEvent } from "react";
 import { Name } from "../interfaces/Name";
-import { View } from "react-native";
+import { TextInput, TextInputComponent, View, Button } from "react-native";
 
 const addNameQuery = gql`
   mutation ($name: String!) {
@@ -38,16 +38,24 @@ function AddName({ updateNames }: Props) {
 
   return (
     <View>
-      <form onSubmit={onSubmit}>
-        <input
+      <form>
+        <View style={{ display: "flex" }}></View>
+        <TextInput
+          style={{
+            height: 40,
+            margin: 12,
+            borderWidth: 1,
+            padding: 10,
+          }}
           ref={(node) => {
             if (node) {
               input = node;
             }
           }}
+          onSubmitEditing={onSubmit}
         />
 
-        <button type="submit">Add Name</button>
+        <Button type="submit" title="Add Name" onPress={onSubmit} />
       </form>
     </View>
   );
