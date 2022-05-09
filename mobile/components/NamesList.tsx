@@ -4,7 +4,7 @@ import AddName from "./NamesForm";
 
 import { useState, useEffect } from "react";
 
-import { ScrollView, Button } from "react-native";
+import { ScrollView, Button, Text } from "react-native";
 
 const getNamesQuery = gql`
   query GetNames($lastId: ID, $limit: Int) {
@@ -39,8 +39,8 @@ function NamesList() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error :(</Text>;
   return (
     <ScrollView>
       <AddName updateNames={updateNames} />

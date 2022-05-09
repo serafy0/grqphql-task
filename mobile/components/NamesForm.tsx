@@ -2,7 +2,13 @@ import { gql, useMutation } from "@apollo/client";
 import { graphql } from "graphql";
 import { FormEvent } from "react";
 import { Name } from "../interfaces/Name";
-import { TextInput, TextInputComponent, View, Button } from "react-native";
+import {
+  TextInput,
+  TextInputComponent,
+  View,
+  Button,
+  Text,
+} from "react-native";
 
 const addNameQuery = gql`
   mutation ($name: String!) {
@@ -20,8 +26,8 @@ interface Props {
 function AddName({ updateNames }: Props) {
   const [addName, { data, loading, error }] = useMutation(addNameQuery);
   let input: HTMLInputElement;
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error :(</Text>;
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
