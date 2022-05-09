@@ -4,7 +4,7 @@ import AddName from "./NamesForm";
 
 import { useState, useEffect } from "react";
 
-import { ScrollView } from "react-native";
+import { ScrollView, Button } from "react-native";
 
 const getNamesQuery = gql`
   query GetNames($lastId: ID, $limit: Int) {
@@ -52,8 +52,9 @@ function NamesList() {
       </ul>
 
       {!allFetched && (
-        <button
-          onClick={async () => {
+        <Button
+          title="fetch more"
+          onPress={async () => {
             const response = await fetchMore({
               variables: { lastId: names[names.length - 1].id },
             });
@@ -67,9 +68,7 @@ function NamesList() {
               return [...prev, ...response.data.getNames];
             });
           }}
-        >
-          fetch more
-        </button>
+        ></Button>
       )}
     </ScrollView>
   );
