@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: app-release.apk
-          path: mobileApp/android/app/build/outputs/apk/bundle/release/
+          path: mobileApp/android/app/build/outputs/bundle/release/
 
   upload-android-to-s3:
     needs: build-android
@@ -47,4 +47,4 @@ jobs:
           aws_key_id: ${{ secrets.AWS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.AWS_BUCKET }}
-          source_dir: "mobileApp/android/app/build/outputs/apk/bundle/release/"
+          source_dir: "mobileApp/android/app/build/outputs/bundle/release/"
