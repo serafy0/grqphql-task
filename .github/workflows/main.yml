@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: app-release.apk
-          path: android/app/build/outputs/apk/release/
+          path: mobileApp/android/app/build/outputs/apk/release/
 
   upload-android-to-s3:
     needs: build-android
