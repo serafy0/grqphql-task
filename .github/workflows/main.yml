@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: mobile
+        working-directory: mobileApp
 
     steps:
       - uses: actions/checkout@v2
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: mobile
+        working-directory: mobileApp
 
     steps:
       - uses: actions/checkout@v2
@@ -30,7 +30,7 @@ jobs:
           npm install
       - name: Build Android Release
         run: |
-          cd android && ./gradlew assembleRelease --warning-mode=all
+          cd android && ./gradlew bundleRelease --warning-mode=all
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
@@ -47,4 +47,4 @@ jobs:
           aws_key_id: ${{ secrets.AWS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.AWS_BUCKET }}
-          source_dir: "mobile/android/app/build/outputs/apk/release/"
+          source_dir: "mobileApp/android/app/build/outputs/apk/release/"
