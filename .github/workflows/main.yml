@@ -32,14 +32,7 @@ jobs:
         run: |
           cd android && ./gradlew bundleRelease --warning-mode=all
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-release.aab
-          path: mobileApp/android/app/build/outputs/bundle/release/
-
-
-      - name: Sign app APK
+      - name: Sign app ABB
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
@@ -48,6 +41,13 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.aab
+          path: mobileApp/android/app/build/outputs/bundle/release/
+
 
   upload-android-to-s3:
     needs: build-android
