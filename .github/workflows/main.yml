@@ -38,6 +38,17 @@ jobs:
           name: app-release.aab
           path: mobileApp/android/app/build/outputs/bundle/release/
 
+
+      - name: Sign app APK
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app
+        with:
+          releaseDirectory: mobileApp/android/app/build/outputs/bundle/release/
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
   upload-android-to-s3:
     needs: build-android
     runs-on: ubuntu-latest
